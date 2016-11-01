@@ -46,7 +46,6 @@ public class Main {
     public static void main(String[] args) {
 
         Main main = new Main();
-//        System.out.println(Character.isLetterOrDigit('('));
         try {
             main.saveTokens(new Lex().handle());
         } catch (IOException e) {

@@ -60,7 +60,6 @@ public class Lex {
             }
             charArray.add(preChars[i]);
         }
-//        charArray.stream().forEach(o -> System.out.print(o));
 
         for (int index = 0; index < charArray.size(); index++) {
 
@@ -109,7 +108,18 @@ public class Lex {
                 case '-':
                     if (charArray.get(++index) == '=') {
                         subTokens.add(new Token("-=", Type.EMI, lineNo));
-                    } else {
+                    }
+                    else if (Character.isDigit(charArray.get(++index))){
+                        int num = 0;
+                        StringBuffer number = new StringBuffer();
+                        while (Character.isDigit(charArray.get(index+num))) {
+                            number.append(charArray.get(index+num));
+                            num++;
+                        }
+                        index += (num-1);
+                        subTokens.add(new Token("-"+number.toString(),Type.Number,lineNo));
+                    }
+                    else {
                         subTokens.add(new Token("-", Type.Minus, lineNo));
                     }
                     break;

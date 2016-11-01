@@ -35,6 +35,11 @@ public enum Type {
     */
     AN,
 
+    /**
+     * .
+     */
+    Dot,
+
 
     /**
      * operator like + - * / =
@@ -74,11 +79,6 @@ public enum Type {
      * normal words, including function name and variable name
      */
     Id,
-
-    /**
-     * .
-     */
-    Dot,
 
     /**
      * number, including integer and double(float)

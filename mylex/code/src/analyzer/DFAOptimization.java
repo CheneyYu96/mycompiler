@@ -26,7 +26,7 @@ public class DFAOptimization {
      * optimize dfa
      * @return
      */
-    public OptimizedDFA optimization(){
+    public OptimizedDFA optimization() {
 
         // store equivalence class
         // first divide into 2 class
@@ -34,10 +34,10 @@ public class DFAOptimization {
         Set<State> other = dfa
                 .getAllStates()
                 .stream()
-                .filter( state -> !dfa.getEndStates().contains(state))
+                .filter(state -> !dfa.getEndStates().contains(state))
                 .collect(Collectors.toSet());
 
-        EquivalClass endClass = new EquivalClass(end ,classIndex++);
+        EquivalClass endClass = new EquivalClass(end, classIndex++);
         classList.add(endClass);
         EquivalClass otherClass = new EquivalClass(other, classIndex++);
         classList.add(otherClass);
@@ -50,13 +50,13 @@ public class DFAOptimization {
         set recognized equivalence class to classList
         to get last equivalence class list
          */
-        for(int i =0 ;i < classList.size(); i++){
-            for(char key : keySet){
-                if(classList.get(i).isHasNextClass()){
+        for (int i = 0; i < classList.size(); i++) {
+            for (char key : keySet) {
+                if (classList.get(i).isHasNextClass()) {
                     break;
                 }
-                List<EquivalClass> tmp = classify(key,classList.get(i));
-                if(tmp!=null) {
+                List<EquivalClass> tmp = classify(key, classList.get(i), classList);
+                if (tmp != null) {
                     classList.addAll(tmp);
                 }
             }
@@ -65,9 +65,35 @@ public class DFAOptimization {
         /*
         get final equivalence class in optimized dfa
          */
-        List<EquivalClass> lastList = classList
+        List<EquivalClass> lastListTmp = classList
                 .stream()
-                .filter( o->!o.isHasNextClass()).collect(Collectors.toList());
+                .filter(o -> !o.isHasNextClass()).collect(Collectors.toList());
+
+        /*
+        track back to see if initial equivalence class has been devided
+        by check if the size of lastList is changed
+         */
+        int size;
+        do {
+            size = lastListTmp.size();
+            for (int i = 0; i < lastListTmp.size(); i++) {
+                for (char key : keySet) {
+                    if (lastListTmp.get(i).isHasNextClass()) {
+                        break;
+                    }
+                    List<EquivalClass> tmp = classify(key, lastListTmp.get(i), lastListTmp);
+                    if (tmp != null) {
+                        lastListTmp.addAll(tmp);
+                    }
+                }
+            }
+        }
+        while (size != lastListTmp.size());
+
+
+        List<EquivalClass> lastList = lastListTmp
+                .stream()
+                .filter(o -> !o.isHasNextClass()).collect(Collectors.toList());
 
 
         EquivalClass begin = lastList
@@ -108,7 +134,7 @@ public class DFAOptimization {
      * @param equivalClass
      * @return
      */
-    private List<EquivalClass> classify(char key, EquivalClass equivalClass){
+    private List<EquivalClass> classify(char key, EquivalClass equivalClass, List<EquivalClass> classList){
 
 
         // certain related equivalence class

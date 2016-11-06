@@ -1,16 +1,18 @@
 package util;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yuminchen on 16/10/22.
  */
 public class Utility {
 
-    public final static String inputFileName = "doc/input.txt";
+    public final static List<String> inputFileName = Arrays.asList("doc/input1.txt","doc/input2.txt");
 
-    public final static String tokenFileName = "doc/tokens.txt";
+    public final static List<String> tokenFileName = Arrays.asList("doc/tokens1.txt","doc/tokens2.txt");
 
     public final static String defFileName = "doc/definition.txt";
 
@@ -24,5 +26,7 @@ public class Utility {
         }
         return false;
     }
+
+
 
 }

@@ -92,4 +92,9 @@ public enum Type {
     PUBLIC, PROTECT, PRIVATE, NEW, CLASS, VOID, STATIC, INT, CHAR, FLOAT, DOUBLE, IF,
     ELSE, SWITCH, CASE, FOR, WHILE, TRY, CATCH,
 
+    /**
+     * end symbol $
+     */
+    END
+
 }

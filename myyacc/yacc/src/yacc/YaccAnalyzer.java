@@ -73,8 +73,9 @@ public class YaccAnalyzer {
     /**
      * build parsing table using first and follow
      */
-    public void buildParsingTable(){
-       for(String pro: parsingTable.getProductions()){
+    public ParsingTable buildParsingTable(){
+        readDefinition();
+        for(String pro: parsingTable.getProductions()){
            Map<String, String> subMap = new HashMap<>();
            // epsilon production, calculate follow
            if(pro.split(":")[1].equals("e")){
@@ -91,6 +92,7 @@ public class YaccAnalyzer {
            parsingTable.addTableMap(pro.split(":")[0],subMap);
 
        }
+        return parsingTable;
     }
 
     /**
@@ -133,6 +135,7 @@ public class YaccAnalyzer {
                 if(tmp.contains("e")){
                     tmp.remove("e");
                     result.addAll(tmp);
+                    sb.delete(0, sb.length());
                 }
                 else {
                     result.addAll(tmp);
@@ -183,7 +186,7 @@ public class YaccAnalyzer {
             for(int i = 1; i<spl.length; i++){
 
                 StringBuffer sb = new StringBuffer();
-                for(int j = 0; j<spl[i].length(); i++){
+                for(int j = 0; j<spl[i].length(); j++){
                     sb.append(spl[i].charAt(j));
 
                     if(parsingTable.getTerminal().contains(sb.toString())){
@@ -192,14 +195,17 @@ public class YaccAnalyzer {
                     }
                     else if (parsingTable.getNonTerminal().contains(sb.toString())){
 
-                        Set<String> tmp = findFollow(sb.toString());
+                        Set<String> tmpFirst = findFirst(sb.toString());
                         // if set contains epsilon, remove epsilon and find next set
-                        if(tmp.contains("e")){
-                            tmp.remove("e");
-                            result.addAll(tmp);
+                        if(tmpFirst.contains("e")){
+                            tmpFirst.remove("e");
+                            result.addAll(tmpFirst);
+                            Set<String> tmpFollow = findFollow(left);
+                            result.addAll(tmpFollow);
+                            sb.delete(0, sb.length());
                         }
                         else {
-                            result.addAll(tmp);
+                            result.addAll(tmpFirst);
                             break;
                         }
                     }
@@ -212,9 +218,7 @@ public class YaccAnalyzer {
 
     public static void main(String[] args) {
         YaccAnalyzer yaccAnalyzer = new YaccAnalyzer();
-        yaccAnalyzer.readDefinition();
-        yaccAnalyzer.buildParsingTable();
-        yaccAnalyzer.parsingTable.printTableMap();
+        yaccAnalyzer.buildParsingTable().printTableMap();
 
     }
 }

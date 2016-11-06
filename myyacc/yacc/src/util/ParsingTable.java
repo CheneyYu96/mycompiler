@@ -61,6 +61,14 @@ public class ParsingTable {
         }
     }
 
+    public boolean isTerminal(String value){
+        return terminal.contains(value);
+    }
+
+    public boolean isNonTerm(String value){
+        return nonTerminal.contains(value);
+    }
+
     /**
      * print the table map
      */
@@ -105,5 +113,9 @@ public class ParsingTable {
             }
             System.out.println(outputString.toString());
         }
+    }
+
+    public Map<String, Map<String, String>> getTableMap() {
+        return tableMap;
     }
 }

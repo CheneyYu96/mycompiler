@@ -23,19 +23,24 @@ public class Lex {
         lineNo = 0;
     }
 
-    public List<Token> handle() throws IOException {
+    public void clear(){
+        lineNo = 0;
+        tokens = new ArrayList<>();
+    }
+
+    public List<Token> handle(String inputFileName, String outputFileName) throws IOException {
 
 
         BufferedReader br = null;
         BufferedWriter bw = null;
 
-        File outputFile = new File(Utility.tokenFileName);
+        File outputFile = new File(outputFileName);
         if (!outputFile.exists()){
             outputFile.createNewFile();
         }
 
         try {
-            br = new BufferedReader(new FileReader(new File(Utility.inputFileName)));
+            br = new BufferedReader(new FileReader(new File(inputFileName)));
             bw = new BufferedWriter(new FileWriter(outputFile));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -281,11 +286,10 @@ public class Lex {
      */
     public static void main(String[] args) throws IOException {
         Lex lex = new Lex();
-        List<Token> tokens = lex.handle();
-
-        for(Token token : tokens){
-            System.out.println(token.toString());
-
+        for (int i = 0;i < Utility.inputFileName.size(); i++){
+            lex.handle(Utility.inputFileName.get(i),Utility.tokenFileName.get(i));
+            lex.clear();
         }
+
     }
 }

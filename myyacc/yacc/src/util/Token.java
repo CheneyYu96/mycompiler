@@ -19,6 +19,12 @@ public class Token {
         return  value + "," + type.name() + ","+line;
     }
 
+
+    public Token(String value, Type type) {
+        this.value = value;
+        this.type = type;
+    }
+
     /**
      *
      * @param value
@@ -27,9 +33,38 @@ public class Token {
      */
     public Token(String value, Type type, int line) {
         this.value = value;
+
         this.type = type;
         this.line = line;
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
+    public static Token string2Token(String value){
+        String[] spl = value.split(",");
+        return new Token(spl[0],Type.valueOf(spl[1]),Integer.parseInt(spl[2]));
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public int getLine() {
+
+        return line;
+    }
+
+    public String getValue() {
+
+        return value;
+    }
+
+    public boolean isEnd(){
+        return type==Type.END;
+
+    }
 
 }

@@ -1,4 +1,4 @@
-Vt:id,num,if,(,),{,},else,while,+,*,>,<,=,==,||,&&,e
+Vt:id,num,if,(,),{,},else,while,+,*,=,==,||,&&,e
 Vn:S,E,R,T,Y,F,C,V,Z,X,B,L,
 %%
 S:id=E
@@ -19,8 +19,6 @@ Z:BX
 X:&&BX
 X:e
 B:(C)
-B:L>L
-B:L<L
 B:L==L
 L:id
 L:num

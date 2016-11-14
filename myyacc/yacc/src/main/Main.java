@@ -75,6 +75,7 @@ public class Main {
             }
 
             if(stackValue.equals("$")&&token.isEnd()){
+                System.out.println("success");
                 break;
             }
 
@@ -156,7 +157,6 @@ public class Main {
 
         return sequences;
     }
-
 
 
 

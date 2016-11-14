@@ -10,9 +10,9 @@ import java.util.Map;
  */
 public class Utility {
 
-    public final static List<String> inputFileName = Arrays.asList("doc/input1.txt","doc/input2.txt");
+    public final static List<String> inputFileName = Arrays.asList("doc/test/input1.txt","doc/test/input2.txt");
 
-    public final static List<String> tokenFileName = Arrays.asList("doc/tokens1.txt","doc/tokens2.txt");
+    public final static List<String> tokenFileName = Arrays.asList("doc/test/tokens1.txt","doc/test/tokens2.txt");
 
     public final static String defFileName = "doc/definition.txt";
 
